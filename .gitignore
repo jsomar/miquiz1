@@ -1,0 +1,9 @@
+# Ejemplo
+private.txt	 # excluir los ficheros con nombre "private.txt"
+*.class		 # excluir los ficheros acabados en “.class”
+*.[oa]		 # excluir ficheros acabados en “.o” y “.a”
+!lib.a		 # no excluir el fichero "lib.a"
+*~			 # excluir ficheros acabados en “~”
+testing/	 # excluir directorio "testing"
+quiz.sqlite	 # exlucir los ficheros sqlite
+.env		 # quitamos el archivo con la configuración de sqlite
