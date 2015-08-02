@@ -14,8 +14,13 @@ router.get('/author', function(req, res){
 });
 
 /* LLamada al controlador para mostrar la pregunta y la respuesta. */
-router.get('/quizes/question', quizController.question);
-router.get('/quizes/answer', quizController.answer);
-/*router.get ('/author/author', quizController.author)*/
+//router.get('/quizes/question', quizController.question);
+//router.get('/quizes/answer', quizController.answer);
+//router.get ('/author/author', quizController.author)
+
+//Definición de rutas de /quizes
+router.get('/quizes',						quizController.index);
+router.get('/quizes/:quizId(\\d+)', 		quizController.show);
+router.get('/quizes/:quizId(\\d+)/answer',	quizController.answer);
 
 module.exports = router;
