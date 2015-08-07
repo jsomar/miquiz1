@@ -6,4 +6,5 @@ private.txt	 # excluir los ficheros con nombre "private.txt"
 *~			 # excluir ficheros acabados en “~”
 testing/	 # excluir directorio "testing"
 quiz.sqlite	 # exlucir los ficheros sqlite
-.env		 # quitamos el archivo con la configuración de sqlite
+.env		 # quitamos el archivo con la configuración de 
+.sqlite
