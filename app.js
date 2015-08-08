@@ -23,7 +23,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser('miquiz1'));
-app.use(session());
+app.use(session(/*{ secret: 'miquiz1', cookie: { maxAge: 120000 }}*/));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -39,6 +39,42 @@ app.use(function(req, res, next) {
 	res.locals.session = req.session;
 	next();
 });
+
+// Auto-logout de session
+app.use(function(req, res, next) {
+    if (req.session.user) {
+        if (Date.now() - req.session.user.lastRequestTime > 1*60*1000) {
+        delete req.session.user;
+    } else {
+        req.session.user.lastRequestTime = Date.now();
+    }
+ }
+    next();
+});
+
+/* Auto-logout con el uso de app.use(session())
+app.use(function(req, res, next) {
+    var sess = req.session;
+    var tiempo = 120000;
+    var tiemposesion = new Date().getTime();
+
+    if (sess && sess.lastAccess) {
+
+        var vidasesion = tiempo - req.session.lastAccess;
+
+        if (tiempo <= vidasesion) {
+
+            delete req.session.user;
+
+        } 
+      }
+      sess.lastAccess = tiemposesion; 
+      next();
+    
+});
+*/
+
+
 
 app.use('/', routes);
 
@@ -77,3 +113,32 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
+
+/*
+app.use())
+Yo lo he hecho así:
+
+En session_controller.js, cuando creo una sesión añado un nuevo campo (lastRequestTime):
+
+exports.create = ...
+ req.session.user = { id: user.id, username: user.username, lastRequestTime: Date.now() };
+
+
+Luego en app.js añado este middelware:
+
+app.use(function(req, res, next) {
+ if (req.session.user) {
+ if (Date.now() - req.session.user.lastRequestTime > 1*60*1000) {
+ delete req.session.user;
+ } else {
+ req.session.user.lastRequestTime = Date.now();
+ }
+ }
+ next();
+});
+
+Funciona perfectamente en local y Herkou. Saludos!!! 
+
+*/
