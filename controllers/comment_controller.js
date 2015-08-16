@@ -54,3 +54,14 @@ exports.publish = function (req, res) {
 	.catch(function(error){next(error)}); 
 };
 
+/* DELETE quizes/:quizId(\\d+)/comments/:commentId(\\d+)
+
+exports.destroy = function (req, res) {
+	req.comment.publicado = false;
+
+	req.comment.destroy().then( function() {
+		res.render('/quizes/'+req.params.quizId);})
+	.catch(function(error){next(error)}); 
+}; 
+*/
+

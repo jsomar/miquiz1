@@ -7,10 +7,14 @@
 <table>
 	<% var i; for (i=0; i < quizes.length; i++){ %>
 		<tr>
-			<td><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+			<td align="left"><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
+			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+			<td align="left"><button name="tema" type="text"><%= quizes[i].tema %></button>
 			<%if(session.user){%>
-				<td><a href="quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a></td>
-				<td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td align="left"><a href="quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a></td>
+				<td>&nbsp;&nbsp;</td>
+				<td align="left">
 					<form method="post" action="quizes/<%= quizes[i].id %>?_method=delete">
 					<button type="submit" onClick="return confirm('¿Desea borrar la pregunta?: <%= quizes[i].pregunta %>');">
 					Eliminar
@@ -21,7 +25,11 @@
 		</tr>
 	<% } %>
 </table>
-<p/>
+<p/><br/>
 <%if(session.user){%>
-<a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+<a href="/quizes/new"><button type="button">Crear pregunta</button></a><br/>
+<br><p><a href="/quizes">Volver</a></p>
 <%}%>
+
+
+

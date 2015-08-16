@@ -4,11 +4,12 @@
 <input type="text" id="resp" name="quiz[respuesta]" placeholder="<%= quiz.respuesta %>"/> <p><br/>
 <label for="tema" class="rem">Tema:</label>
 <select id="tema" name="quiz[tema]">
-	<option value="humanidades">Humanidades</option>
- 	<option value="ocio">Ocio</option>
- 	<option value="ciencia">Ciencia</option>
-  	<option value="tecnologia">Tecnología</option>
-  	<option value="otros">Otros</option>
-</select><br>
+	<option selected>Elige un tema</option>
+	<option value="Humanidades" <%if (quiz.tema==="Humanidades"){%> selected <%}%> >Humanidades</option>
+ 	<option value="Ocio" <%if (quiz.tema==="Ocio"){%> selected <%}%> >Ocio</option>
+ 	<option value="Ciencia" <%if (quiz.tema==="Ciencia"){%> selected <%}%> >Ciencia</option>
+  	<option value="Tecnologia" <%if (quiz.tema==="Tecnologia"){%> selected <%}%> >Tecnología</option>
+  	<option value="Otros" <%if (quiz.tema==="Otros"){%> selected <%}%> >Otros</option>
+</select><br/>
 <br><a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Insertar">

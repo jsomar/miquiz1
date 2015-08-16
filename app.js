@@ -118,7 +118,7 @@ module.exports = app;
 
 /*
 app.use())
-Yo lo he hecho así:
+
 
 En session_controller.js, cuando creo una sesión añado un nuevo campo (lastRequestTime):
 
@@ -139,6 +139,5 @@ app.use(function(req, res, next) {
  next();
 });
 
-Funciona perfectamente en local y Herkou. Saludos!!! 
 
 */
