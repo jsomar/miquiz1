@@ -33,25 +33,52 @@ var Quiz = sequelize.import(quiz_path);
 var comment_path = path.join(__dirname,'comment');
 var Comment = sequelize.import(comment_path);
 
+// Importar la definición de la tabla Users en user.js
+var user_path = path.join(__dirname,'user');
+var User = sequelize.import(user_path);
+
 // Relación de las tablas Quiz y Comment
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
+// Relación de las tablas User y Quiz
+Quiz.belongsTo(User);
+User.hasMany(Quiz);
 
-exports.Quiz = Quiz; // exportar definición de tabla Quiz
-exports.Comment = Comment; // exportar definición de tabla Comment
 
-//sequelize.sync() crea e inicializa tabla de preguntas en DB
+exports.Quiz = Quiz; 		// exportar definición de tabla Quiz
+exports.Comment = Comment; 	// exportar definición de tabla Comment
+exports.User = User; 		// exportar definición de la tabla User
+
+//sequelize.sync() crea e inicializa tabla de usuarios en DB
 sequelize.sync().then(function(){
 	// then(..) ejecuta el manejador una vez creada la tabla
-	Quiz.count().then(function (count){
-		if (count === 0) { // la tabla se inicializa solo si está vacia
-			Quiz.bulkCreate(
+	User.count().then(function (count){
+		User.bulkCreate(
 			[
-				{ pregunta: '¿Capital de Italia?', 	respuesta: 'Roma', tema: 'Humanidades'},
-				{ pregunta: '¿Capital de Portugal?',respuesta: 'Lisboa', tema: 'Humanidades'}
+				{username: 'admin', password: '1234', isAdmin: true},
+				{username: 'Jesus', password: 'admin', isAdmin: true},
+				{username: 'pepe',	password: '5678'}
 			]
-			).then(function(){console.log('Base de datos inicializada')});
-		};
-	});	
+			).then(function(){
+				console.log('Base de datos usuarios inicializada');
+				Quiz.count().then(function (count){
+					if (count === 0) { // la tabla se inicializa solo si está vacia
+						Quiz.bulkCreate(
+						[
+							{pregunta: '¿Capital de Italia?', 	
+							 respuesta: 'Roma', 
+							 tema: 'Humanidades', 
+							 UserId: 3},
+
+							{pregunta: '¿Capital de Portugal?',
+							 respuesta: 'Lisboa', 
+							 tema: 'Humanidades', 
+							 UserId: 3}
+						]
+					).then(function(){console.log('Base de datos Quizzes inicializada')});
+				};
+			});	
+		});
+	});
 });
