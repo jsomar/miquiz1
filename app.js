@@ -7,13 +7,18 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
+var multer = require('multer');
 
 var routes = require('./routes/index');
+
 var app = express();
+
+app.use(multer({dest:'./public/media/'}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 
 app.use(partials());
 // uncomment after placing your favicon in /public
@@ -30,8 +35,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Helpers dinámicos:
 app.use(function(req, res, next) {
 
-	// guarda path en session.redir para despues de login
-	if (!req.path.match(/\/login|\/logout/)) {
+    // Si no existe lo inicializa
+    if (!req.session.redir) {
+        req.session.redir = '/';
+    };
+
+	// guarda path en session.redir para después de login
+	if (!req.path.match(/\/login|\/logout|\/user/)) {
 		req.session.redir = req.path;
 	}
 
@@ -73,8 +83,6 @@ app.use(function(req, res, next) {
     
 });
 */
-
-
 
 app.use('/', routes);
 

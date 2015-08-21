@@ -1,5 +1,20 @@
 var models = require('../models/models.js');
 
+// MW que permite acciones solamente si el quiz objeto
+// pertenece al usuario logeado o si es cuenta admin
+
+exports.ownershipRequired = function(req, res, next) {
+	var objQuizOwner = req.quiz.UserId;
+	var logUser = req.session.user.id;
+	var isAdmin = req.session.user.isAdmin;
+
+	 if (isAdmin || objQuizOwner === logUser) {
+	 	next();
+	 } else {
+	 	res.redirect('/');
+	 }
+};
+
 // Autoload - factoriza el código si ruta incluye :quizId
 exports.load = function(req, res, next, quizId) {
 	models.Quiz.find({
@@ -95,7 +110,7 @@ exports.answer = function (req,res){
 
 exports.new = function (req, res){
 	var quiz = models.Quiz.build( //Crea el objeto quiz
-		{pregunta: "Pregunta", respuesta: "Respuesta", tema: "Tema"}
+		{pregunta: "Pregunta", respuesta: "Respuesta", tema: "Tema", image:"Image"}
 		);
 	res.render('quizes/new', {quiz: quiz, errors: []});
 };
@@ -104,6 +119,11 @@ exports.new = function (req, res){
 
 exports.create = function(req, res) {
 	req.body.quiz.UserId = req.session.user.id;
+	
+	if (req.files.image) {
+		req.body.quiz.image = req.files.image.name;
+	}
+
 	var quiz = models.Quiz.build( req.body.quiz );
 
 	quiz.validate().then( function (err){
@@ -111,7 +131,7 @@ exports.create = function(req, res) {
 			res.render('quizes/new', {quiz: quiz, errors: err.errors});
 		} else {
 			//guarda en DB los campos pregunta y respuesta de quiz
-			quiz.save({fields: ["pregunta", "respuesta", "tema", "UserId"]}).then( function(){
+			quiz.save({fields: ["pregunta", "respuesta", "tema",  "UserId", "image"]}).then( function(){
 			res.redirect('/quizes')}) 
 		} // Redirección HTTP (URL relativo) lista de preguntas
 	}
@@ -129,6 +149,11 @@ exports.edit = function(req, res) {
 
 // PUT /quizes/:id
 exports.update = function (req, res) {
+
+	if (req.files.image) {
+		req.quiz.image = req.files.image.name;
+	}
+
 	req.quiz.pregunta = req.body.quiz.pregunta;
 	req.quiz.respuesta = req.body.quiz.respuesta;
 	req.quiz.tema = req.body.quiz.tema;
@@ -138,7 +163,7 @@ exports.update = function (req, res) {
 				if (err) {
 					res.render('quizes/edit', {quiz: req.quiz, errors: err.errors});
 				} else {
-					req.quiz.save( {fields: ["pregunta", "respuesta", "tema"]})
+					req.quiz.save( {fields: ["pregunta", "respuesta", "tema", "image"]})
 					.then ( function(){ res.redirect('/quizes');});
 				}
 			}

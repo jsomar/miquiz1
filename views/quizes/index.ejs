@@ -10,7 +10,8 @@
 			<td align="left"><a href="quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
 			<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			<td align="left"><button name="tema" type="text"><%= quizes[i].tema %></button>
-			<%if(session.user){%>
+			<%if(session.user){
+				if (session.user.isAdmin || session.user.id === quizes[i].UserId){%>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td align="left"><a href="quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a></td>
 				<td>&nbsp;&nbsp;</td>
@@ -20,8 +21,9 @@
 					Eliminar
 					</button>
 				</form>
-			<td>
-			<%}%>
+			<td> 
+			<%}
+		}%>
 		</tr>
 	<% } %>
 </table>

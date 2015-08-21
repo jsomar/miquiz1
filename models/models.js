@@ -68,7 +68,7 @@ sequelize.sync().then(function(){
 						[
 							{pregunta: '¿Capital de Italia?', 	
 							 respuesta: 'Roma', 
-							 tema: 'Humanidades', 
+							 tema: 'Humanidades',
 							 UserId: 3},
 
 							{pregunta: '¿Capital de Portugal?',

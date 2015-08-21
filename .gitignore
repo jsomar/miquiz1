@@ -9,3 +9,6 @@ quiz.sqlite	 # exlucir los ficheros sqlite
 .env		 # quitamos el archivo con la configuración de 
 .sqlite
 commands_to_generate_keys.txt
+public/media
+node_modules
+npm-debug.log
