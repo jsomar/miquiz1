@@ -2,9 +2,9 @@
 	<p><img class="quiz_img" src="/media/<%= quiz.image %>"></p>
 <%}%>
 <form method="get" action="/quizes/<%= quiz.id %>/answer">
-  Pregunta: <%= quiz.pregunta %> <p>
-  <input type="text" name="respuesta" placeholder="Responda aquí" />
-  <input type="submit" value="Enviar">	
+  Pregunta: <%= quiz.pregunta %> <p><br>
+  <input style='width:30%' type="text" name="respuesta" placeholder="Responda aquí" />
+  <input type="submit" value="Enviar">
 </form>
 <br />
 <p><a href="/quizes/<%=quiz.id%>/comments/new"><button>Nuevo Comentario</button></a></p><br />

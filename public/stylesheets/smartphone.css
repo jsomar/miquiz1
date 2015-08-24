@@ -1,8 +1,14 @@
-body			{background: #333; }
+body				{background: #333; }
 
 #page-wrap:after	{content: "Smartphone Layout"; }
 
-h2 span, section h1	{display: none; }
+#n1					{font-size: medium;}
+
+h1 span				{font-size: xx-small;}
+h2 span, section h1	{display: 	none; }
 body				{font-size: xx-large; }
-footer, input		{font-size: large; }	
-.quiz_img			{float: none; }
+footer				{font-size: large; }
+input 				{min-width:100%;
+					font-size: large;}	
+.quiz_img			{float: 	none;
+					 height: 	150px; }
