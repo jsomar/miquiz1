@@ -69,11 +69,13 @@ sequelize.sync().then(function(){
 							{pregunta: '¿Capital de Italia?', 	
 							 respuesta: 'Roma', 
 							 tema: 'Humanidades',
+							 image: '',
 							 UserId: 3},
 
 							{pregunta: '¿Capital de Portugal?',
 							 respuesta: 'Lisboa', 
-							 tema: 'Humanidades', 
+							 tema: 'Humanidades',
+							 image:'', 
 							 UserId: 3}
 						]
 					).then(function(){console.log('Base de datos Quizzes inicializada')});
